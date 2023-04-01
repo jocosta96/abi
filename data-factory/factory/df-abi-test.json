@@ -1,0 +1,9 @@
+{
+	"name": "df-abi-test",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7b62bb63-9b0c-45cb-b5f7-8ed1d2c74649",
+		"tenantId": "c1467842-8a04-4410-8bcb-30290cb28d0a"
+	}
+}
