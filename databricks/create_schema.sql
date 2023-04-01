@@ -19,3 +19,24 @@ LOCATION '/mnt/20_silver'
 CREATE SCHEMA IF NOT EXISTS 30_gold
 COMMENT 'trusted zone' 
 LOCATION '/mnt/30_gold'
+
+-- COMMAND ----------
+
+CREATE SCHEMA IF NOT EXISTS metadata
+COMMENT 'etl metadata'
+
+-- COMMAND ----------
+
+CREATE TABLE IF NOT EXISTS metadata.landing (
+    name     string
+  , path     string
+  , type     string
+  , sep      string
+)
+
+USING DELTA
+LOCATION '/mnt/dls/metadata/landing'
+
+-- COMMAND ----------
+
+
