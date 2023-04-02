@@ -1,8 +1,11 @@
 # Databricks notebook source
 import csv
-import chardet   
+import chardet
+import re
 
 from delta import DeltaTable
+
+import pyspark.sql.functions as F
 
 # COMMAND ----------
 
@@ -108,8 +111,14 @@ else:
 
 # COMMAND ----------
 
+sdf_final = sdf_10.select(
+    *[F.col(x).alias(re.sub('\W+','', x)) for x in sdf_10.columns]
+)
+
+# COMMAND ----------
+
 resp = (
-    sdf_10.write.format("delta")
+    sdf_final.write.format("delta")
       .mode('overwrite')
       .option('delta.enableChangeDataFeed', 'true')
       .option('delta.logRetentionDuration', f'interval 7 days')
