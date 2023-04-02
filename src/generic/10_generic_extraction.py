@@ -1,5 +1,6 @@
 # Databricks notebook source
 import csv
+import chardet   
 
 from delta import DeltaTable
 
@@ -61,25 +62,36 @@ if sdf_mt.rdd.isEmpty():
         
         str_type = 'parquet'
         str_delimiter = ''
+        str_charenc = ''
         
-    except :
+    except:
         
         str_file_name = [x.name for x in list_files][0]
+        
+        with open(f'/dbfs/{str_path_final}{str_file_name}', "rb") as rawdata:
+            
+            obj_result = chardet.detect(rawdata.read())
+            str_charenc = obj_result['encoding']
 
-        with open(f'/dbfs/{str_path_final}{str_file_name}','rt') as csvfile:
+        with open(f'/dbfs/{str_path_final}{str_file_name}','rt', encoding=str_charenc) as csvfile:
 
-            obj_dialect = csv.Sniffer().sniff(csvfile.read(1024), delimiters=";,\t")
+            obj_dialect = csv.Sniffer().sniff(csvfile.read(2048), delimiters=";,\t|")
             csvfile.seek(0)
             obj_reader = csv.reader(csvfile, obj_dialect)
             str_delimiter = obj_reader.dialect.delimiter
         
-        sdf_10 = spark.read.option('sep', delimiter).option('header', 'true').csv(str_path_final)
+        sdf_10 = (
+            spark.read.option('sep', str_delimiter)
+            .option('header', 'true')
+            .option('encoding', str_charenc)
+            .csv(str_path_final)
+        )
         
         str_type = 'csv'
         
     spark.sql(f"""
         INSERT INTO metadata.landing
-            VALUES('{str_name}', '{str_base_path}', '{str_type}', '{str_delimiter}')
+            VALUES('{str_name}', '{str_base_path}', '{str_type}', '{str_delimiter}', '{str_charenc}')
     """)
     
 else:
@@ -108,4 +120,4 @@ resp = (
 
 # COMMAND ----------
 
-DeltaTable.forName(spark, f'10_bronze.{str_name}').vacuum()
+#DeltaTable.forName(spark, f'10_bronze.{str_name}').vacuum()
