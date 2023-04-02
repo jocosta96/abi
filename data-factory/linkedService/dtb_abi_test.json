@@ -7,7 +7,7 @@
 			"domain": "https://adb-3527973263390887.7.azuredatabricks.net",
 			"authentication": "MSI",
 			"workspaceResourceId": "/subscriptions/9c8b3593-7c03-4efa-9cf1-6132c280f8fa/resourceGroups/rg-abi-test/providers/Microsoft.Databricks/workspaces/dtb-abi-test",
-			"existingClusterId": "0401-104428-84g1ch6v"
+			"existingClusterId": "0402-000228-u2f2scpk"
 		}
 	}
 }
