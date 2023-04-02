@@ -112,7 +112,10 @@ else:
 # COMMAND ----------
 
 sdf_final = sdf_10.select(
-    *[F.col(x).alias(re.sub('\W+','', x)) for x in sdf_10.columns]
+    *[
+        F.col(x).alias(re.sub('\W+','', x), metadata={'comment': f"original_name: {x}"})
+        for x in sdf_10.columns
+    ]
 )
 
 # COMMAND ----------
@@ -122,8 +125,10 @@ resp = (
       .mode('overwrite')
       .option('delta.enableChangeDataFeed', 'true')
       .option('delta.logRetentionDuration', f'interval 7 days')
-      .option('delta.autoOptimize.autoCompact', 'true')        
+      .option('delta.autoOptimize.autoCompact', 'true')
+      .option('encoding', 'utf8')
       .option('path', str_dest_path)
+      .option('comment', f'extracted from {str_source_type} system using {str_extraction_method}')
       .saveAsTable(f'10_bronze.{str_name}')
 )
 
