@@ -1,0 +1,33 @@
+{
+	"name": "pipeline1_copy1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Notebook1",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/main/abi/src/generic/10_generic_extraction",
+					"baseParameters": {
+						"source_type": "ff",
+						"extraction_method": "ff",
+						"name": "beverage_sales"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "dtb_abi_test",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
