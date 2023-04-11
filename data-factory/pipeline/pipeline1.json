@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Notebook1",
+				"name": "beverage_channel_group",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -20,6 +20,31 @@
 						"source_type": "ff",
 						"extraction_method": "ff",
 						"name": "beverage_channel_group"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "dtb_abi_test",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "beverage_sales",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/main/abi/src/generic/10_generic_extraction",
+					"baseParameters": {
+						"source_type": "ff",
+						"extraction_method": "ff",
+						"name": "beverage_sales"
 					}
 				},
 				"linkedServiceName": {
