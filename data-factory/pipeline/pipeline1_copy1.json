@@ -81,6 +81,26 @@
 					"referenceName": "dtb_abi_test",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "dim_trade_channel",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/main/abi/src/20_silver/10-20_010_dim_trade_channel"
+				},
+				"linkedServiceName": {
+					"referenceName": "dtb_abi_test",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": []
