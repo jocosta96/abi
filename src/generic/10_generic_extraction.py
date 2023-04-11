@@ -105,9 +105,14 @@ else:
         spark.read.format(nmtp_params.type)
             .option('sep', nmtp_params.sep)
             .option('path', str_path_final)
+            .option('encoding', nmtp_params.encoding)
             .option('header', 'true')
             .load()
     )
+
+# COMMAND ----------
+
+sdf_10.show()
 
 # COMMAND ----------
 
@@ -126,7 +131,7 @@ resp = (
       .option('delta.enableChangeDataFeed', 'true')
       .option('delta.logRetentionDuration', f'interval 7 days')
       .option('delta.autoOptimize.autoCompact', 'true')
-      .option('encoding', 'utf8')
+#      .option('encoding', 'utf8')
       .option('path', str_dest_path)
       .option('comment', f'extracted from {str_source_type} system using {str_extraction_method}')
       .saveAsTable(f'10_bronze.{str_name}')
